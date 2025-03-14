@@ -45,7 +45,7 @@ Für das Management der SVM sind verschiedene Optionen verfügbar:
 
 In jedem Fall sollte sich die Schnittstelle im DNS enthalten, und beim Konfigurieren von Trident sollte der DNS-Name verwendet werden. Dadurch lassen sich einige DR-Szenarien, beispielsweise SVM-DR, vereinfachen, ohne die Aufbewahrung der Netzwerkidentität zu nutzen.
 
-Es besteht keine Präferenz zwischen einer dedizierten oder gemeinsam genutzten Management-LIF für die SVM. Sie sollten jedoch sicherstellen, dass Ihre Netzwerksicherheitsrichtlinien mit dem von Ihnen gewählten Ansatz abgestimmt sind. Unabhängig davon sollte die Management-LIF über DNS zugänglich sein, um ein Maximum an Flexibilität zu ermöglichen https://docs.netapp.com/ontap-9/topic/com.netapp.doc.pow-dap/GUID-B9E36563-1C7A-48F5-A9FF-1578B99AADA9.html["SVM-DR"^] Zusammen mit Trident verwendet werden.
+Es besteht keine Präferenz zwischen einer dedizierten oder gemeinsam genutzten Management-LIF für die SVM. Sie sollten jedoch sicherstellen, dass Ihre Netzwerksicherheitsrichtlinien mit dem von Ihnen gewählten Ansatz abgestimmt sind. Trotzdem sollte die Management-LIF über DNS zugänglich sein, um maximale Flexibilität zu ermöglichen, sollte https://docs.netapp.com/us-en/ontap/data-protection/snapmirror-svm-replication-concept.html["SVM-DR"^] in Verbindung mit Trident verwendet werden.
 
 
 
@@ -88,7 +88,7 @@ Sie können in der Back-End-Definition den CHAP-Initiator und die Benutzernamen 
 
 === Erstellen und Verwenden einer SVM QoS-Richtlinie
 
-Die Nutzung einer ONTAP QoS-Richtlinie auf die SVM begrenzt die Anzahl der durch die von Trident bereitgestellten Volumes konsumierbaren IOPS. Dies hilft http://docs.netapp.com/ontap-9/topic/com.netapp.doc.pow-perf-mon/GUID-77DF9BAF-4ED7-43F6-AECE-95DFB0680D2F.html?cp=7_1_2_1_2["Verhindern Sie einen Schläger"^] Oder nicht-kontrollider Container, der Workloads außerhalb der Trident SVM beeinträchtigt.
+Die Nutzung einer ONTAP QoS-Richtlinie auf die SVM begrenzt die Anzahl der durch die von Trident bereitgestellten Volumes konsumierbaren IOPS. Dies hilft bei der https://docs.netapp.com/us-en/ontap/performance-admin/guarantee-throughput-qos-task.html["Verhindern Sie einen Schläger"^] Überwachung oder außer Kontrolle geraten durch Container, die Workloads außerhalb der Trident SVM beeinträchtigen.
 
 Sie können in wenigen Schritten eine QoS-Richtlinie für die SVM erstellen. Die genauesten Informationen finden Sie in der Dokumentation Ihrer ONTAP-Version. Das folgende Beispiel erstellt eine QoS-Richtlinie, die die insgesamt für eine SVM verfügbaren IOPS auf 5000 begrenzt.
 
@@ -118,7 +118,7 @@ IMPORTANT: Sie sollten die QoS Policy Group der SVM *only* zuweisen, wenn Ihre O
 
 === Erstellen von QoS-Richtliniengruppen für Trident
 
-Quality of Service (QoS) garantiert, dass die Performance kritischer Workloads nicht durch konkurrierende Workloads beeinträchtigt wird. ONTAP QoS-Richtliniengruppen bieten QoS-Optionen für Volumes und ermöglichen Benutzern, die Durchsatzgrenze für einen oder mehrere Workloads zu definieren. Weitere Informationen zur QoS finden Sie unter https://docs.netapp.com/ontap-9/topic/com.netapp.doc.pow-perf-mon/GUID-77DF9BAF-4ED7-43F6-AECE-95DFB0680D2F.html["Garantierter Durchsatz durch QoS"^]. Sie können QoS-Richtliniengruppen im Backend oder im Storage-Pool festlegen und werden auf jedes in diesem Pool oder Backend erstellte Volume angewendet.
+Quality of Service (QoS) garantiert, dass die Performance kritischer Workloads nicht durch konkurrierende Workloads beeinträchtigt wird. ONTAP QoS-Richtliniengruppen bieten QoS-Optionen für Volumes und ermöglichen Benutzern, die Durchsatzgrenze für einen oder mehrere Workloads zu definieren. Weitere Informationen zur QoS finden Sie unter https://docs.netapp.com/us-en/ontap/performance-admin/guarantee-throughput-qos-task.html["Garantierter Durchsatz durch QoS"^]. Sie können QoS-Richtliniengruppen im Backend oder im Storage-Pool festlegen und werden auf jedes in diesem Pool oder Backend erstellte Volume angewendet.
 
 ONTAP verfügt über zwei Arten von QoS-Richtliniengruppen: Herkömmliche und anpassungsfähige. Herkömmliche Richtliniengruppen bieten einen flachen maximalen Durchsatz (oder minimalen Durchsatz in späteren Versionen) in IOPS. Adaptive QoS skaliert den Durchsatz automatisch auf die Workload-Größe und erhält das Verhältnis von IOPS zu TB-fähigen GB-Werten, wenn sich die Workload-Größe ändert. Wenn Sie Hunderte oder Tausende Workloads in einer großen Implementierung managen, bietet sich somit ein erheblicher Vorteil.
 
@@ -152,7 +152,7 @@ storage:
 * Sie sollten die Richtliniengruppen pro Volume anwenden, damit jedes Volume den gesamten von der Richtliniengruppe angegebenen Durchsatz erhält. Gemeinsame Richtliniengruppen werden nicht unterstützt.
 
 
-Weitere Informationen zu QoS-Richtliniengruppen finden Sie unter https://docs.netapp.com/ontap-9/topic/com.netapp.doc.dot-cm-cmpr-980/TOC__qos.html["ONTAP 9.8 QoS-Befehle"^].
+Weitere Informationen zu QoS-Richtliniengruppen finden Sie unter https://docs.netapp.com/us-en/ontap-cli-98/index.html["ONTAP 9.8 QoS-Befehle"^].
 
 
 
@@ -282,8 +282,8 @@ Einige der Best Practices-Dokumentationen sind unten aufgeführt. Suchen Sie die
 *ONTAP*
 
 * https://www.netapp.com/us/media/tr-4067.pdf["NFS Best Practice- und Implementierungsleitfaden"^]
-* http://docs.netapp.com/ontap-9/topic/com.netapp.doc.dot-cm-sanag/home.html["SAN-Administration-Leitfaden"^] (Für iSCSI)
-* http://docs.netapp.com/ontap-9/topic/com.netapp.doc.exp-iscsi-rhel-cg/home.html["ISCSI Express-Konfiguration für RHEL"^]
+* https://docs.netapp.com/us-en/ontap/san-admin/index.html["SAN-Storage-Management"^] (Für iSCSI)
+* https://docs.netapp.com/us-en/ontap/san-admin/provision-storage.html["ISCSI Express-Konfiguration für RHEL"^]
 
 
 *Element Software*
